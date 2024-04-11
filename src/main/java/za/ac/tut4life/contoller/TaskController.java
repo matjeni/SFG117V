@@ -1,21 +1,15 @@
 package za.ac.tut4life.contoller;
 
 
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import za.ac.tut4life.model.Task;
 import za.ac.tut4life.service.TaskService;
-import za.ac.tut4life.service.implementation.TaskServiceImpl;
 import za.ac.tut4life.util.DateUtil;
 import za.ac.tut4life.util.LoggerUtil;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
@@ -45,30 +39,45 @@ public class TaskController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable("id") Long taskId){
+    public ResponseEntity<Task> getTaskById(@PathVariable("id") Long taskId, @RequestHeader Map<String, String> headers){
+        LOGGER.LOG_INFO("Endpoint getTaskById : was hit at: "+ DATEUTIL.getTime() +" by : ", TaskController.class);
+        headers.forEach((key, value) -> {
+            LOGGER.LOG_INFO((String.format("Header '%s' = %s", key, value)), TaskController.class);
+        });
         Task t = taskService.getTaskById(taskId);
+        LOGGER.LOG_INFO("Task Found: "+t.getTaskName(), TaskController.class);
         return new ResponseEntity<>(t,HttpStatus.OK);
     }
 
     @GetMapping("/")
-    public String getTaskList(){
-        //List<Task> taskList = taskService.getAllTasks();
-        //return new ResponseEntity<>(taskList,HttpStatus.OK);
-        LOGGER.LOG_INFO("hi",TaskController.class);
-        return "hi";
-    }
-/*
-    @GetMapping
-    public ResponseEntity<String> updateTask(@PathVariable("id") Long taskId, @RequestBody Task task){
-         taskService.deleteTask(taskId);
-        return new ResponseEntity<>("Deleted successfully",HttpStatus.OK);
+    public ResponseEntity<List<Task>> getTaskList(@RequestHeader Map<String, String> headers){
+        LOGGER.LOG_INFO("Endpoint getTaskList : was hit at: "+ DATEUTIL.getTime() +" by : ", TaskController.class);
+        headers.forEach((key, value) -> {
+            LOGGER.LOG_INFO((String.format("Header '%s' = %s", key, value)), TaskController.class);
+        });
+        List<Task> taskList = taskService.getAllTasks();
+        return new ResponseEntity<>(taskList,HttpStatus.OK);
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<Task> deleteTaskById(@PathVariable("id") Long taskId){
-        Task t = taskService.getTaskById(taskId);
+    @PostMapping("/update/task")
+    public ResponseEntity<Task> updateTask(@RequestBody Task task,@RequestHeader Map<String, String> headers){
+        LOGGER.LOG_INFO("Endpoint updateTask : was hit at: "+ DATEUTIL.getTime() +" by : ", TaskController.class);
+        headers.forEach((key, value) -> {
+            LOGGER.LOG_INFO((String.format("Header '%s' = %s", key, value)), TaskController.class);
+        });
+        Task t = taskService.updateTask(task);
         return new ResponseEntity<>(t,HttpStatus.OK);
-    }*/
+    }
+
+    @GetMapping("remove/{id}")
+    public ResponseEntity<String> deleteTaskById(@PathVariable("id") Long taskId, @RequestHeader Map<String, String> headers){
+        LOGGER.LOG_INFO("Endpoint deleteTaskById : was hit at: "+ DATEUTIL.getTime() +" by : ", TaskController.class);
+        headers.forEach((key, value) -> {
+            LOGGER.LOG_INFO((String.format("Header '%s' = %s", key, value)), TaskController.class);
+        });
+        taskService.deleteTask(taskId);
+        return new ResponseEntity<>("Deleted for good!",HttpStatus.OK);
+    }
 
 
 }

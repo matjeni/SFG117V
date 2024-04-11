@@ -47,3 +47,40 @@ This project topic idea is solely created to streamline the monitoring and track
     "taskDescription": "Take a walk while playing",
     "taskStatus": true
 }`
+
+
+
+- Update task - http://localhost:8080/TaskService/task/v1/update/task
+
+**Request**
+
+`  {
+        "taskID": 1,
+        "taskName": "add to git checks",
+        "taskStartDate": "2024-04-12T21:00:00.000+00:00",
+        "taskEndDate": "2024-04-12T22:00:00.000+00:00",
+        "taskDescription": "task description update",
+        "taskStatus": true
+    }`
+
+
+**Response**
+
+`{
+    "taskID": 1,
+    "taskName": "add to git checks",
+    "taskStartDate": "2024-04-12T21:00:00.000+00:00",
+    "taskEndDate": "2024-04-12T22:00:00.000+00:00",
+    "taskDescription": "task description update",
+    "taskStatus": false
+}`
+
+- Delete Task - http://localhost:8080/TaskService/task/v1/remove/7
+
+**Request**
+
+Append taskID `to base URL`
+
+**Response**
+
+`Deleted for good!`
