@@ -27,6 +27,7 @@ This project topic idea is solely created to streamline the monitoring and track
 - To create a task in mysql db - `http://localhost:8080/TaskService/task/v1/create/task`
 
 **Request**
+
 `{
     "taskName": "Postkid",
     "taskStartDate": "2024-04-10T08:45:00.000+02:00",
