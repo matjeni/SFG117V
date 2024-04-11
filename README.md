@@ -7,7 +7,7 @@ This project topic idea is solely created to streamline the monitoring and track
 
 ### SERVER REQUIREMENTS
 
-*** URL Download: *** https://github.com/wildfly/wildfly/releases/download/31.0.1.Final/wildfly-31.0.1.Final.zip
+*** URL Download:*** https://github.com/wildfly/wildfly/releases/download/31.0.1.Final/wildfly-31.0.1.Final.zip
 
 
 - All you need to build this project is Java 11.0 (Java SDK 11) or later and Maven 3.6.0 or later.
