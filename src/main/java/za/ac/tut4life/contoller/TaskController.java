@@ -3,16 +3,21 @@ package za.ac.tut4life.contoller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import za.ac.tut4life.model.Task;
 import za.ac.tut4life.service.TaskService;
 import za.ac.tut4life.service.implementation.TaskServiceImpl;
 import za.ac.tut4life.util.DateUtil;
 import za.ac.tut4life.util.LoggerUtil;
 
+import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/task/v1")
@@ -23,10 +28,13 @@ public class TaskController {
     public LoggerUtil LOGGER = new LoggerUtil();
     public DateUtil DATEUTIL = new DateUtil();
 
-    @RequestMapping(value = "/health-check", method= RequestMethod.GET)
-    public ResponseEntity<TaskServiceImpl> health(@RequestParam(value="health-check", defaultValue =" We are pumping!") String status) {
-        LOGGER.LOG_INFO("Endpoint /task/v1/health-check/: was hit at: "+ DATEUTIL.getTime() +" by : ", TaskController.class);
-        return null;
+    @GetMapping(value = "/health-check")
+    public String getHeaders(@RequestHeader Map<String, String> headers) {
+        LOGGER.LOG_INFO("/health-check: was hit at: "+ DATEUTIL.getTime() +" by :", TaskController.class);
+        headers.forEach((key, value) -> {
+            LOGGER.LOG_INFO((String.format("Header '%s' = %s", key, value)), TaskController.class);
+        });
+        return "We are pumping!";
     }
 
    @PostMapping("/create/task")

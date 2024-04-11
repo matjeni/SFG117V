@@ -21,4 +21,28 @@ This project topic idea is solely created to streamline the monitoring and track
 4. Copy war file to `wildfly/standalone/deployments/`
 5. Run server `./Standalone.sh`
 
+### Testing Endpoints
 
+- This is our basic health check - `http://localhost:8080/TaskService/task/v1/health-check`
+- To create a task in mysql db - `http://localhost:8080/TaskService/task/v1/create/task`
+
+**Request**
+`{
+    "taskName": "Postkid",
+    "taskStartDate": "2024-04-10T08:45:00.000+02:00",
+    "taskEndDate" : "2024-04-10T09:45:00.000+02:00",
+    "taskDescription": "Take a walk while playing",
+    "taskStatus": 1
+}`
+
+
+**Response**
+
+`{
+    "taskID": 74,
+    "taskName": "Postkid",
+    "taskStartDate": "2024-04-10T06:45:00.000+00:00",
+    "taskEndDate": "2024-04-10T07:45:00.000+00:00",
+    "taskDescription": "Take a walk while playing",
+    "taskStatus": true
+}`
