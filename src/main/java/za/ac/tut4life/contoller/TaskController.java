@@ -41,21 +41,15 @@ public class TaskController {
     @GetMapping("{id}")
     public ResponseEntity<Task> getTaskById(@PathVariable("id") Long taskId, @RequestHeader Map<String, String> headers){
         LOGGER.LOG_INFO("Endpoint getTaskById : was hit at: "+ DATEUTIL.getTime() +" by : ", TaskController.class);
-        headers.forEach((key, value) -> {
-            LOGGER.LOG_INFO((String.format("Header '%s' = %s", key, value)), TaskController.class);
-        });
         Task t = taskService.getTaskById(taskId);
         LOGGER.LOG_INFO("Task Found: "+t.getTaskName(), TaskController.class);
         return new ResponseEntity<>(t,HttpStatus.OK);
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Task>> getTaskList(@RequestHeader Map<String, String> headers){
-        LOGGER.LOG_INFO("Endpoint getTaskList : was hit at: "+ DATEUTIL.getTime() +" by : ", TaskController.class);
-        headers.forEach((key, value) -> {
-            LOGGER.LOG_INFO((String.format("Header '%s' = %s", key, value)), TaskController.class);
-        });
+    public ResponseEntity<List<Task>> getTaskList(){
         List<Task> taskList = taskService.getAllTasks();
+        LOGGER.LOG_INFO(" getTaskList count :::::>> "+taskList.size(), TaskController.class);
         return new ResponseEntity<>(taskList,HttpStatus.OK);
     }
 
